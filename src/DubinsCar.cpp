@@ -5,16 +5,18 @@
  * @author Antonio Teran (teran@mit.edu)
  */
 
-#include "slam-graphs/DubinsCar.cpp"
+#include "slam-graphs/DubinsCar.h"
 
 namespace mrg {
 
-DubinsCar::DubinsCar(double initial_x = 0.0, double initial_y = 0.0,
-                     double initial_theta = 0.0, double car_speed = 1.0)
-    : state_.x_position(initial_x),
-    state_.y_position(initial_y), state_.theta_angle(initial_theta),
-    kCarSpeed(car_speed) {
-  // Add initial values to trajectory.
+DubinsCar::DubinsCar(double initial_x, double initial_y, double initial_theta,
+                     double car_speed)
+    : kCarSpeed(car_speed) {
+  // Setup initial conditions.
+  state_.x_position = initial_x;
+  state_.y_position = initial_y;
+  state_.theta_angle = initial_theta;
+  // Keep track of initial values in trajectory.
   trajectory_.emplace_back(state_);
 }
 
