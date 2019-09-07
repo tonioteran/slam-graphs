@@ -12,6 +12,8 @@
 #include <memory>
 #include <vector>
 
+namespace mrg {
+
 //! Class for discrete implementation of Dubins Car.
 /*!
   Based on the equations for the Dubins path:
@@ -34,13 +36,17 @@ public:
     double theta_angle; // [radians]
   };
 
-  // TODO(teran) Add description.
+  // TODO(teran) Add description and implement!
   void MoveCar(double u, double delta_t);
 
   //! Get the car's current `CarState`.
-  inline std::unique_ptr<CarState> GetState() {
-    return std::make_unique<CarState>(state_);
-  };
+  inline CarState GetState() { return state_; };
+  //! Get the car's hitherto trajectory.
+  inline std::vector<CarState> GetTrajectory() { return trajectory_; };
+
+  //! Get the car's desired parameter hitherto history, where `param` can be
+  //! "x", "y", or "theta".
+  std::vector<double> GetParamHistory(const std::string &param);
 
 private:
   //! Current navigation state of the car.
@@ -48,23 +54,13 @@ private:
   //! Vector for storing the car's navigation history.
   std::vector<CarState> trajectory_;
 
-  //! Current car's state variable for x-position, in meters.
-  double current_x_;
-  //! Current car's state variable for y-position, in meters.
-  double current_y_;
-  //! Current car's state variable for orientation angle, in radians.
-  double current_theta_;
-
-  //! Vector for storing the x-position sequence of the car's trajectory.
-  std::vector<double> x_history_;
-  //! Vector for storing the y-position sequence of the car's trajectory.
-  std::vector<double> y_history_;
-  //! Vector for storing the orientation sequence of the car's trajectory.
-  std::vector<double> theta_history_;
-
   // Car properties and constants:
-  double kMaxTurningAngle = 0.5; // [radians]
-  double kDeltaT = 0.1;          // [seconds]
+  const double kMaxDeltaThetaPerStep = 0.1; // [radians]
+  const double kSteeringAngleBound = 0.5;   // [radians]
+  const double kDeltaT = 0.1;               // [seconds]
+  const double kCarSpeed = 1.0;             // [meters/second]
 };
+
+} // namespace mrg
 
 #endif // SLAM_GRAPHS_DUBINS_CAR_H_
