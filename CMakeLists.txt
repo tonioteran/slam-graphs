@@ -17,21 +17,22 @@ find_package(GTSAM REQUIRED)
 find_package(Eigen3 3.3 REQUIRED)
 
 # Dubins Car library
-add_library(DubinsCar
-  src/DubinsCar.cpp)
-target_include_directories(DubinsCar
+add_library(${PROJECT_NAME}
+  src/DubinsCar.cpp
+  src/PointLandmark.cpp)
+target_include_directories(${PROJECT_NAME}
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
   PRIVATE src)
-target_link_libraries(DubinsCar
+target_link_libraries(${PROJECT_NAME}
   PUBLIC
     gtsam
     Eigen3::Eigen)
-set_target_properties(DubinsCar PROPERTIES
+set_target_properties(${PROJECT_NAME} PROPERTIES
   VERSION ${PROJECT_VERSION}
   SOVERSION 1)
-target_compile_options(DubinsCar PRIVATE -W -Wall -Wextra -Wpedantic)
-target_compile_features(DubinsCar PRIVATE cxx_std_14)
+target_compile_options(${PROJECT_NAME} PRIVATE -W -Wall -Wextra -Wpedantic)
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_14)
 
 add_subdirectory(apps)
