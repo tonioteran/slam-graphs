@@ -54,7 +54,7 @@ std::vector<double> DubinsCar::GetParamHistory(const std::string &param) const {
 // Operator overload.
 
 std::ostream &operator<<(std::ostream &os, const DubinsCar &c) {
-  os << "t = " << c.GetTimeStep() << ", (" << c.GetXPosition() << ", "
+  os << "Car: t = " << c.GetTimeStep() << ", (" << c.GetXPosition() << ", "
      << c.GetYPosition() << ", " << c.GetThetaAngle() << ").";
   return os;
 }
