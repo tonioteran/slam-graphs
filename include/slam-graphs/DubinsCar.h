@@ -9,7 +9,6 @@
 #define SLAM_GRAPHS_DUBINS_CAR_H_
 
 #include <iostream>
-#include <memory>
 #include <vector>
 
 namespace mrg {

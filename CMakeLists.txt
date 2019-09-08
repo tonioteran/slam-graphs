@@ -11,6 +11,8 @@ endif()
 
 include(GNUInstallDirs)
 
+# For plotting using matplotlib
+find_package(PythonLibs 3)
 find_package(GTSAM REQUIRED)
 find_package(Eigen3 3.3 REQUIRED)
 
