@@ -7,6 +7,8 @@
 
 #include "slam-graphs/DubinsCar.h"
 
+#include <math.h>
+
 namespace mrg {
 
 DubinsCar::DubinsCar(double initial_x, double initial_y, double initial_theta,
@@ -20,7 +22,19 @@ DubinsCar::DubinsCar(double initial_x, double initial_y, double initial_theta,
   trajectory_.emplace_back(state_);
 }
 
-std::vector<double> DubinsCar::GetParamHistory(const std::string &param) {
+DubinsCar::~DubinsCar() {}
+
+void DubinsCar::MoveCar(double u) {
+  // TODO(tonioteran) check control values and enforce bounds.
+  state_.theta_angle += u * kDeltaT;
+  state_.x_position += kCarSpeed * cos(state_.theta_angle) * kDeltaT;
+  state_.y_position += kCarSpeed * sin(state_.theta_angle) * kDeltaT;
+
+  // Add new state to trajectory.
+  trajectory_.emplace_back(state_);
+}
+
+std::vector<double> DubinsCar::GetParamHistory(const std::string &param) const {
   std::vector<double> history;
   history.reserve(trajectory_.size());
 
@@ -35,6 +49,14 @@ std::vector<double> DubinsCar::GetParamHistory(const std::string &param) {
   }
 
   return history;
+}
+
+// Operator overload.
+
+std::ostream &operator<<(std::ostream &os, const DubinsCar &c) {
+  os << "t = " << c.GetTimeStep() << ", (" << c.GetXPosition() << ", "
+     << c.GetYPosition() << ", " << c.GetThetaAngle() << ").";
+  return os;
 }
 
 } // namespace mrg

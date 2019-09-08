@@ -22,7 +22,9 @@ namespace mrg {
     theta_dot = u,
   where `u` represents the control input, and `V` the speed of the car, the
   implementation makes use of the following discretized model:
-  TODO(teran) add discretized set of equations
+    x_t+1 = x_t + V * cos(theta_t+1) * deltaT
+    y_t+1 = y_t + V * sin(theta_t+1) * deltaT
+    theta_t+1 = theta_t + u * deltaT
  */
 class DubinsCar {
 public:
@@ -36,17 +38,28 @@ public:
     double theta_angle; // [radians]
   };
 
-  // TODO(teran) Add description and implement!
-  void MoveCar(double u, double delta_t);
+  //! TODO(teran) Add description and implement!
+  void MoveCar(double u);
+
+  //! Overload for printing the current state of the car.
+  friend std::ostream &operator<<(std::ostream &os, const DubinsCar &c);
 
   //! Get the car's current `CarState`.
-  inline CarState GetState() { return state_; };
+  inline CarState GetState() const { return state_; };
+  //! Get the car's current time step number.
+  inline int GetTimeStep() const { return trajectory_.size() - 1; };
+  //! Get the car's current x-position.
+  inline double GetXPosition() const { return state_.x_position; };
+  //! Get the car's current y-position.
+  inline double GetYPosition() const { return state_.y_position; };
+  //! Get the car's current heading angle.
+  inline double GetThetaAngle() const { return state_.theta_angle; };
   //! Get the car's hitherto trajectory.
-  inline std::vector<CarState> GetTrajectory() { return trajectory_; };
+  inline std::vector<CarState> GetTrajectory() const { return trajectory_; };
 
   //! Get the car's desired parameter hitherto history, where `param` can be
   //! "x", "y", or "theta".
-  std::vector<double> GetParamHistory(const std::string &param);
+  std::vector<double> GetParamHistory(const std::string &param) const;
 
 private:
   //! Current navigation state of the car.
