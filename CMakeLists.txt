@@ -32,5 +32,4 @@ set_target_properties(DubinsCar PROPERTIES
 target_compile_options(DubinsCar PRIVATE -W -Wall -Wextra -Wpedantic)
 target_compile_features(DubinsCar PRIVATE cxx_std_14)
 
-
-
+add_subdirectory(apps)
