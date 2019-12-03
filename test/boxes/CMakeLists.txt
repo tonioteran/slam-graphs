@@ -18,6 +18,8 @@ set(boxes-src
   glextensions.cpp
   qtbox.cpp
   roundedbox.cpp
+  /home/tonio/Qt5.13.2/5.13.2/gcc_64/include/QtCore/qrandom.h
   trackball.cpp)
 add_executable(boxes ${boxes-src})
+target_include_directories(boxes PUBLIC "/home/tonio/Qt5.13.2/5.13.2/gcc_64/include/QtCore")
 target_link_libraries(boxes Qt5::Core Qt5::Widgets Qt5::Gui Qt5::OpenGL OpenGL)
